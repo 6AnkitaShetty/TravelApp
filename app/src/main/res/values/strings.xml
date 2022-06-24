@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">TravelApp</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="retry">Retry</string>
+    <string name="flag_icon">Flag icon</string>
+    <string name="my_locations_stations_nearby">My Locations Stations nearby</string>
+    <string name="search_station">Search station</string>
+</resources>

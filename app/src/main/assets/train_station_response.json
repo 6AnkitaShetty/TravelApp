@@ -1,0 +1,201 @@
+{
+  "payload": [
+    {
+      "UICCode": "8301307",
+      "stationType": "INTERCITY_STATION",
+      "EVACode": "8300056",
+      "code": "COMO",
+      "sporen": [
+      ],
+      "synoniemen": [
+      ],
+      "heeftFaciliteiten": true,
+      "heeftVertrektijden": true,
+      "heeftReisassistentie": false,
+      "namen": {
+        "lang": "Como S. Giovanni",
+        "middel": "Como S. Giovanni",
+        "kort": "Como S. G"
+      },
+      "land": "I",
+      "lat": 45.80889,
+      "lng": 9.071944,
+      "radius": 0,
+      "naderenRadius": 0,
+      "ingangsDatum": "2018-12-16",
+      "nearbyMeLocationId": {
+        "value": "COMO",
+        "type": "stationV2"
+      }
+    },
+    {
+      "UICCode": "8301645",
+      "stationType": "INTERCITY_STATION",
+      "EVACode": "8300047",
+      "code": "DOMOD",
+      "sporen": [
+      ],
+      "synoniemen": [
+      ],
+      "heeftFaciliteiten": true,
+      "heeftVertrektijden": true,
+      "heeftReisassistentie": false,
+      "namen": {
+        "lang": "Milano Porta Garibaldi",
+        "middel": "Milano Garibaldi",
+        "kort": "Milano G"
+      },
+      "land": "I",
+      "lat": 45.484722,
+      "lng": 9.187778,
+      "radius": 0,
+      "naderenRadius": 0,
+      "ingangsDatum": "2022-05-28",
+      "nearbyMeLocationId": {
+        "value": "DOMOD",
+        "type": "stationV2"
+      }
+    },
+    {
+      "UICCode": "8302593",
+      "stationType": "INTERCITY_STATION",
+      "EVACode": "8300094",
+      "code": "MEREL",
+      "sporen": [
+      ],
+      "synoniemen": [
+      ],
+      "heeftFaciliteiten": true,
+      "heeftVertrektijden": true,
+      "heeftReisassistentie": false,
+      "namen": {
+        "lang": "Venezia Santa Lucia",
+        "middel": "Venezia Santa Lu",
+        "kort": "Venezia"
+      },
+      "land": "I",
+      "lat": 45.4410734,
+      "lng": 12.3188549,
+      "radius": 0,
+      "naderenRadius": 0,
+      "ingangsDatum": "2022-05-28",
+      "nearbyMeLocationId": {
+        "value": "MEREL",
+        "type": "stationV2"
+      }
+    },
+    {
+      "UICCode": "8305043",
+      "stationType": "INTERCITY_STATION",
+      "EVACode": "8300217",
+      "code": "ALESS",
+      "sporen": [
+      ],
+      "synoniemen": [
+      ],
+      "heeftFaciliteiten": true,
+      "heeftVertrektijden": true,
+      "heeftReisassistentie": false,
+      "namen": {
+        "lang": "Bologna Centrale",
+        "middel": "Bologna Centrale",
+        "kort": "Bologna C"
+      },
+      "land": "I",
+      "lat": 44.506389,
+      "lng": 11.341944,
+      "radius": 0,
+      "naderenRadius": 0,
+      "ingangsDatum": "2022-05-28",
+      "nearbyMeLocationId": {
+        "value": "ALESS",
+        "type": "stationV2"
+      }
+    },
+    {
+      "UICCode": "8306900",
+      "stationType": "INTERCITY_STATION",
+      "EVACode": "8300180",
+      "code": "LIVOR",
+      "sporen": [
+      ],
+      "synoniemen": [
+      ],
+      "heeftFaciliteiten": true,
+      "heeftVertrektijden": true,
+      "heeftReisassistentie": false,
+      "namen": {
+        "lang": "Firenze Campo di Marte",
+        "middel": "Firenze Campo M",
+        "kort": "Firenze C"
+      },
+      "land": "I",
+      "lat": 43.776667,
+      "lng": 11.276667,
+      "radius": 0,
+      "naderenRadius": 0,
+      "ingangsDatum": "2022-05-28",
+      "nearbyMeLocationId": {
+        "value": "LIVOR",
+        "type": "stationV2"
+      }
+    },
+    {
+      "UICCode": "8002084",
+      "stationType": "SNELTREIN_STATION",
+      "EVACode": "8000139",
+      "code": "MGZB",
+      "sporen": [
+      ],
+      "synoniemen": [
+        "Gunzburg"
+      ],
+      "heeftFaciliteiten": true,
+      "heeftVertrektijden": true,
+      "heeftReisassistentie": false,
+      "namen": {
+        "lang": "Günzburg",
+        "middel": "Günzburg",
+        "kort": "Günzburg"
+      },
+      "land": "D",
+      "lat": 48.460226,
+      "lng": 10.278707,
+      "radius": 0,
+      "naderenRadius": 0,
+      "ingangsDatum": "2018-12-16",
+      "nearbyMeLocationId": {
+        "value": "MGZB",
+        "type": "stationV2"
+      }
+    },
+    {
+      "UICCode": "8002140",
+      "stationType": "SNELTREIN_STATION",
+      "EVACode": "8000013",
+      "code": "MA",
+      "sporen": [
+      ],
+      "synoniemen": [
+      ],
+      "heeftFaciliteiten": true,
+      "heeftVertrektijden": true,
+      "heeftReisassistentie": false,
+      "namen": {
+        "lang": "Augsburg Hbf",
+        "middel": "Augsburg Hbf",
+        "kort": "Augsburg"
+      },
+      "land": "D",
+      "lat": 48.3654307143927,
+      "lng": 10.88547706604,
+      "radius": 0,
+      "naderenRadius": 0,
+      "ingangsDatum": "2018-12-16",
+      "nearbyMeLocationId": {
+        "value": "MA",
+        "type": "stationV2"
+      }
+    }
+  ]
+}
