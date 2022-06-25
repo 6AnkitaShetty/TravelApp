@@ -4,8 +4,12 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.travelapp.data.FakeDataUtil
 import com.example.travelapp.data.util.NetworkHelper
 import com.example.travelapp.data.util.Resource
+import com.example.travelapp.domain.repository.DataStoreRepository
+import com.example.travelapp.domain.repository.FakeDataStoreRepository
 import com.example.travelapp.domain.repository.FakeTrainStationRepository
 import com.example.travelapp.domain.usecase.GetTrainStationsUseCase
+import com.example.travelapp.domain.usecase.ReadSavedStationsUseCase
+import com.example.travelapp.domain.usecase.SaveTrainStationsUseCase
 import com.example.travelapp.domain.usecase.SearchTrainStationsUseCase
 import com.example.travelapp.presentation.viewmodel.TrainStationsViewModel
 import com.example.travelapp.util.MainCoroutineRule
@@ -31,6 +35,8 @@ class TrainStationsViewModelTest {
 
     private lateinit var getTrainStationsUseCase: GetTrainStationsUseCase
     private lateinit var searchTrainStationsUseCase: SearchTrainStationsUseCase
+    private lateinit var saveTrainStationsUseCase: SaveTrainStationsUseCase
+    private lateinit var readSavedStationsUseCase: ReadSavedStationsUseCase
     private lateinit var viewModel: TrainStationsViewModel
 
     @Mock
@@ -39,15 +45,23 @@ class TrainStationsViewModelTest {
     @Mock
     private lateinit var trainStationRepository: FakeTrainStationRepository
 
+    @Mock
+    private lateinit var dataStoreRepository: FakeDataStoreRepository
+
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         getTrainStationsUseCase = GetTrainStationsUseCase(trainStationRepository)
         searchTrainStationsUseCase = SearchTrainStationsUseCase(trainStationRepository)
+        saveTrainStationsUseCase = SaveTrainStationsUseCase(trainStationRepository)
+        readSavedStationsUseCase = ReadSavedStationsUseCase((trainStationRepository))
         viewModel = TrainStationsViewModel(
             networkHelper = networkHelper,
             getTrainStationsUseCase,
-            searchTrainStationsUseCase
+            searchTrainStationsUseCase,
+            saveTrainStationsUseCase,
+            readSavedStationsUseCase,
+            dataStoreRepository
         )
     }
 

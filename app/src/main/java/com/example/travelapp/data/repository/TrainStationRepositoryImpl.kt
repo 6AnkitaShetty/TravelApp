@@ -1,16 +1,21 @@
 package com.example.travelapp.data.repository
 
 import com.example.travelapp.data.api.TrainStationApiService
+import com.example.travelapp.data.db.StationsDao
+import com.example.travelapp.data.db.StationsEntity
 import com.example.travelapp.data.model.ApiResponse
 import com.example.travelapp.data.model.Payload
 import com.example.travelapp.data.util.Resource
 import com.example.travelapp.data.util.searchPayload
 import com.example.travelapp.data.util.sortPayload
 import com.example.travelapp.domain.repository.TrainStationRepository
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
-class TrainStationRepositoryImpl(private val trainStationApiService: TrainStationApiService) :
-    TrainStationRepository {
+class TrainStationRepositoryImpl(
+    private val trainStationApiService: TrainStationApiService,
+    private val trainStationsDao: StationsDao
+) : TrainStationRepository {
 
     override suspend fun getTrainStations(): Resource<List<Payload>> {
         return responseToResource(trainStationApiService.getTrainStations(), null)
@@ -18,6 +23,15 @@ class TrainStationRepositoryImpl(private val trainStationApiService: TrainStatio
 
     override suspend fun searchTrainStations(query: String): Resource<List<Payload>> {
         return responseToResource(trainStationApiService.getTrainStations(), query)
+    }
+
+    override suspend fun saveTrainStations(stationsEntity: StationsEntity): Long {
+        trainStationsDao.insertStations(stationsEntity)
+        return 0
+    }
+
+    override fun getSavedTrainStations(): Flow<List<StationsEntity>> {
+        return trainStationsDao.getTrainStations()
     }
 
     private fun responseToResource(

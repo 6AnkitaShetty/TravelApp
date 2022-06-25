@@ -8,9 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.travelapp.data.model.Payload
 import com.example.travelapp.databinding.ItemTrainStationBinding
 
-class TrainStationListAdapter : RecyclerView.Adapter<TrainStationListAdapter.TrainStationListAdapterViewHolder>(){
+class TrainStationListAdapter :
+    RecyclerView.Adapter<TrainStationListAdapter.TrainStationListAdapterViewHolder>() {
 
-    class TrainStationListAdapterViewHolder(val binding: ItemTrainStationBinding) :
+    class TrainStationListAdapterViewHolder(private val binding: ItemTrainStationBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Payload) {
             binding.model = item
@@ -30,7 +31,10 @@ class TrainStationListAdapter : RecyclerView.Adapter<TrainStationListAdapter.Tra
 
     val differ = AsyncListDiffer(this, differCallback)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrainStationListAdapterViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): TrainStationListAdapterViewHolder {
         val binding =
             ItemTrainStationBinding.inflate(
                 LayoutInflater.from(parent.context),

@@ -1,13 +1,23 @@
 package com.example.travelapp.domain.repository
 
+import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import androidx.lifecycle.asLiveData
+import androidx.room.Room
+import androidx.test.core.app.ApplicationProvider
+import com.example.travelapp.data.FakeDataUtil
 import com.example.travelapp.data.api.TrainStationApiService
+import com.example.travelapp.data.db.StationsDao
+import com.example.travelapp.data.db.StationsDatabase
+import com.example.travelapp.data.db.StationsEntity
+import com.example.travelapp.data.model.ApiResponse
 import com.example.travelapp.data.model.Payload
 import com.example.travelapp.data.repository.TrainStationRepositoryImpl
 import com.example.travelapp.data.util.Resource
 import com.example.travelapp.util.MainCoroutineRule
 import com.example.travelapp.util.MockWebServerBaseTest
+import com.example.travelapp.util.runBlockingTest
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
@@ -36,11 +46,29 @@ class TrainStationRepositoryImplTest : MockWebServerBaseTest() {
     override fun isMockServerEnabled(): Boolean = true
     private lateinit var trainStationRepositoryImpl: TrainStationRepositoryImpl
     private lateinit var trainStationApiService: TrainStationApiService
-
+    private lateinit var stationsDao: StationsDao
+    private lateinit var stationsDatabase: StationsDatabase
+    private lateinit var responseObserver: Observer<List<StationsEntity>>
     @Before
     fun setup() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        stationsDatabase = Room.inMemoryDatabaseBuilder(
+            context, StationsDatabase::class.java
+        ).allowMainThreadQueries().build()
+        stationsDao = stationsDatabase.getStationsDao()
         trainStationApiService = provideTestApiService()
-        trainStationRepositoryImpl = TrainStationRepositoryImpl(trainStationApiService)
+        trainStationRepositoryImpl = TrainStationRepositoryImpl(trainStationApiService,stationsDao)
+        responseObserver = Observer { }
+    }
+
+    @Test
+    fun testFavoriteNewsInsertionInDb() {
+        coroutineRule.runBlockingTest {
+            trainStationRepositoryImpl.saveTrainStations(StationsEntity(ApiResponse(FakeDataUtil.getFakeTrainStations())) )
+            val stations = trainStationRepositoryImpl.getSavedTrainStations().asLiveData()
+            stations.observeForever(responseObserver)
+            assertThat(stations.value?.isNotEmpty()).isTrue()
+        }
     }
 
     @Test

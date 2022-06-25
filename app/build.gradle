@@ -97,6 +97,9 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.1"
     implementation "androidx.lifecycle:lifecycle-common-java8:2.4.1"
 
+    //DataStore
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+
     // Local Unit Tests
     testImplementation "androidx.test:core:1.4.0"
     testImplementation 'junit:junit:4.13.2'

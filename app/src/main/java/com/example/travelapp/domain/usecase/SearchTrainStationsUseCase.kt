@@ -7,7 +7,7 @@ import com.example.travelapp.domain.repository.TrainStationRepository
 class SearchTrainStationsUseCase(
     private val trainStationRepository: TrainStationRepository
 ) {
-    suspend operator fun invoke(query:String): Resource<List<Payload>> {
+    suspend operator fun invoke(query: String): Resource<List<Payload>> {
         return trainStationRepository.searchTrainStations(query)
     }
 }

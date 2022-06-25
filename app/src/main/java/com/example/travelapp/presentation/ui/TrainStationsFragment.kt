@@ -55,6 +55,9 @@ class TrainStationsFragment : Fragment() {
             binding.searchStations.onActionViewCollapsed()
             true
         }
+        if (viewModel.isLaunched) {
+            viewModel.readSavedTrainStations()
+        }
     }
 
     private fun setupObservers() {
