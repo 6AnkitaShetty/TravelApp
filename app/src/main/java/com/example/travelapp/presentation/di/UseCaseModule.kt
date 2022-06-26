@@ -24,5 +24,4 @@ class UseCaseModule {
     fun provideSearchTrainStationsUseCases(trainStationRepository: TrainStationRepository): SearchTrainStationsUseCase {
         return SearchTrainStationsUseCase(trainStationRepository)
     }
-
 }

@@ -28,7 +28,7 @@ class TrainStationsViewModel @Inject constructor(
 
     private val trainStationsLiveData = MutableLiveData<Resource<List<Payload>>>()
     val trainStations: LiveData<Resource<List<Payload>>> = trainStationsLiveData
-    var searchEnable: Boolean = false
+    private var searchEnable: Boolean = false
 
     fun getTrainStations() {
         viewModelScope.launch(Dispatchers.IO) {

@@ -10,7 +10,7 @@ import com.example.travelapp.databinding.ItemTrainStationBinding
 
 class TrainStationListAdapter : RecyclerView.Adapter<TrainStationListAdapter.TrainStationListAdapterViewHolder>(){
 
-    class TrainStationListAdapterViewHolder(val binding: ItemTrainStationBinding) :
+    class TrainStationListAdapterViewHolder(private val binding: ItemTrainStationBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Payload) {
             binding.model = item
