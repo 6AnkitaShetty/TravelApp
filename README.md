@@ -10,7 +10,7 @@ The app's functionality includes:
 ## Stations Screen: 
 1. Shows a list of nearby stations based on current location.
 2. Shows a way to search your favorite train stations and displays list of station based on stations name
-3. Contains a feature to cache trains stations information for first time launch of the app and display list of stations from database for next app launches(cache_stations branch).
+3. Contains a feature to cache trains stations information for first time launch of the app and display list of stations from database for next app launches(cache_train_stations branch).
 4. Covered with Unit testing and UI testiong of the features
 
 ## Technologies Used
