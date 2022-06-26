@@ -9,6 +9,7 @@ import com.example.travelapp.domain.usecase.GetTrainStationsUseCase
 import com.example.travelapp.domain.usecase.SearchTrainStationsUseCase
 import com.example.travelapp.presentation.viewmodel.TrainStationsViewModel
 import com.example.travelapp.util.MainCoroutineRule
+import com.example.travelapp.util.provideFakeCoroutinesDispatcherProvider
 import com.example.travelapp.util.runBlockingTest
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -32,6 +33,7 @@ class TrainStationsViewModelTest {
     private lateinit var getTrainStationsUseCase: GetTrainStationsUseCase
     private lateinit var searchTrainStationsUseCase: SearchTrainStationsUseCase
     private lateinit var viewModel: TrainStationsViewModel
+    private val testDispatcher = coroutineRule.testDispatcher
 
     @Mock
     private lateinit var networkHelper: NetworkHelper
@@ -47,7 +49,8 @@ class TrainStationsViewModelTest {
         viewModel = TrainStationsViewModel(
             networkHelper = networkHelper,
             getTrainStationsUseCase,
-            searchTrainStationsUseCase
+            searchTrainStationsUseCase,
+            coroutinesDispatcherProvider = provideFakeCoroutinesDispatcherProvider(testDispatcher)
         )
     }
 

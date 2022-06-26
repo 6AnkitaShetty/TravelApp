@@ -42,19 +42,28 @@ class TrainStationsFragment : Fragment() {
 
                 override fun onQueryTextChange(newText: String?): Boolean {
                     newText?.let {
-                        viewModel.enableSearch()
-                        viewModel.searchTrainStations(newText)
+                        if (it.isEmpty()) {
+                            viewModel.clearSearch()
+                            viewModel.getTrainStations()
+                        } else {
+                            viewModel.enableSearch()
+                            viewModel.searchTrainStations(newText)
+                        }
                     }
                     return false
                 }
             }
         )
         binding.searchStations.setOnCloseListener {
-            viewModel.clearSearch()
-            viewModel.getTrainStations()
-            binding.searchStations.onActionViewCollapsed()
+            resetStations()
             true
         }
+    }
+
+    private fun resetStations() {
+        viewModel.clearSearch()
+        viewModel.getTrainStations()
+        binding.searchStations.onActionViewCollapsed()
     }
 
     private fun setupObservers() {

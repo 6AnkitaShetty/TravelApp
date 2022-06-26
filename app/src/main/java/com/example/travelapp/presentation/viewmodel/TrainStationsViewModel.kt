@@ -9,8 +9,8 @@ import com.example.travelapp.data.util.NetworkHelper
 import com.example.travelapp.data.util.Resource
 import com.example.travelapp.domain.usecase.GetTrainStationsUseCase
 import com.example.travelapp.domain.usecase.SearchTrainStationsUseCase
+import com.example.travelapp.presentation.di.CoroutinesDispatcherProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
@@ -20,6 +20,7 @@ class TrainStationsViewModel @Inject constructor(
     private val networkHelper: NetworkHelper,
     private val trainStationsUseCase: GetTrainStationsUseCase,
     private val searchTrainStationsUseCase: SearchTrainStationsUseCase,
+    private val coroutinesDispatcherProvider: CoroutinesDispatcherProvider
 ) : ViewModel() {
 
     init {
@@ -31,7 +32,7 @@ class TrainStationsViewModel @Inject constructor(
     private var searchEnable: Boolean = false
 
     fun getTrainStations() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(coroutinesDispatcherProvider.io) {
             trainStationsLiveData.postValue(Resource.Loading())
             try {
                 if (networkHelper.isNetworkConnected()) {
@@ -48,7 +49,7 @@ class TrainStationsViewModel @Inject constructor(
 
     fun searchTrainStations(query: String) {
         if (query.isNotEmpty() && searchEnable) {
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch(coroutinesDispatcherProvider.io) {
                 trainStationsLiveData.postValue(Resource.Loading())
                 try {
                     if (networkHelper.isNetworkConnected()) {
