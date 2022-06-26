@@ -21,7 +21,9 @@ class TrainStationRepositoryImpl(
         return responseToResource(trainStationApiService.getTrainStations(), null)
     }
 
-    override suspend fun searchTrainStations(query: String): Resource<List<Payload>> {
+    override suspend fun searchTrainStations(
+        query: String
+    ): Resource<List<Payload>> {
         return responseToResource(trainStationApiService.getTrainStations(), query)
     }
 

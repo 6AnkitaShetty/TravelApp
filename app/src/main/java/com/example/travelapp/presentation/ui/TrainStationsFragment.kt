@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.travelapp.data.util.Resource
@@ -19,8 +19,16 @@ import dagger.hilt.android.AndroidEntryPoint
 class TrainStationsFragment : Fragment() {
 
     private lateinit var binding: FragmentTrainStationsBinding
-    private val viewModel: TrainStationsViewModel by viewModels()
+    private lateinit var viewModel: TrainStationsViewModel
     private lateinit var trainStationListAdapter: TrainStationListAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this)[TrainStationsViewModel::class.java]
+        if (!viewModel.isLaunched) {
+            viewModel.getTrainStations()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -1,11 +1,9 @@
 package com.example.travelapp.util
 
+import com.example.travelapp.presentation.di.CoroutinesDispatcherProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runBlockingTest
-import kotlinx.coroutines.test.setMain
+import kotlinx.coroutines.test.*
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
@@ -31,3 +29,15 @@ fun MainCoroutineRule.runBlockingTest(block: suspend () -> Unit) =
     this.testDispatcher.runBlockingTest {
         block()
     }
+
+@ExperimentalCoroutinesApi
+fun provideFakeCoroutinesDispatcherProvider(
+    dispatcher: TestCoroutineDispatcher?
+): CoroutinesDispatcherProvider {
+    val sharedTestCoroutineDispatcher = TestCoroutineDispatcher()
+    return CoroutinesDispatcherProvider(
+        dispatcher ?: sharedTestCoroutineDispatcher,
+        dispatcher ?: sharedTestCoroutineDispatcher,
+        dispatcher ?: sharedTestCoroutineDispatcher
+    )
+}

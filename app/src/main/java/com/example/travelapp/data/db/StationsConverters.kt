@@ -2,7 +2,6 @@ package com.example.travelapp.data.db
 
 import androidx.room.TypeConverter
 import com.example.travelapp.data.model.ApiResponse
-import com.example.travelapp.data.model.Payload
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

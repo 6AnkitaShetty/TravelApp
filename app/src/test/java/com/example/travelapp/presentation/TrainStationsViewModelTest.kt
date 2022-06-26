@@ -13,10 +13,13 @@ import com.example.travelapp.domain.usecase.SaveTrainStationsUseCase
 import com.example.travelapp.domain.usecase.SearchTrainStationsUseCase
 import com.example.travelapp.presentation.viewmodel.TrainStationsViewModel
 import com.example.travelapp.util.MainCoroutineRule
+import com.example.travelapp.util.provideFakeCoroutinesDispatcherProvider
 import com.example.travelapp.util.runBlockingTest
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.*
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
@@ -38,6 +41,7 @@ class TrainStationsViewModelTest {
     private lateinit var saveTrainStationsUseCase: SaveTrainStationsUseCase
     private lateinit var readSavedStationsUseCase: ReadSavedStationsUseCase
     private lateinit var viewModel: TrainStationsViewModel
+    private val testDispatcher = coroutineRule.testDispatcher
 
     @Mock
     private lateinit var networkHelper: NetworkHelper
@@ -61,7 +65,8 @@ class TrainStationsViewModelTest {
             searchTrainStationsUseCase,
             saveTrainStationsUseCase,
             readSavedStationsUseCase,
-            dataStoreRepository
+            dataStoreRepository,
+            coroutinesDispatcherProvider = provideFakeCoroutinesDispatcherProvider(testDispatcher)
         )
     }
 
@@ -100,7 +105,7 @@ class TrainStationsViewModelTest {
                 .thenReturn(true)
             // Stub repository with fake favorites
             whenever(trainStationRepository.getTrainStations())
-                .thenAnswer { Resource.Error("Internet is not available", null) }
+                .thenAnswer { Resource.Error("Error occurred", null) }
 
             //When
             viewModel.getTrainStations()
@@ -108,7 +113,7 @@ class TrainStationsViewModelTest {
             //then
             val response = viewModel.trainStations.value
             assertThat(response?.message).isNotNull()
-            assertThat(response?.message).isEqualTo("Internet is not available")
+            assertThat(response?.message).isEqualTo("Error occurred")
         }
     }
 

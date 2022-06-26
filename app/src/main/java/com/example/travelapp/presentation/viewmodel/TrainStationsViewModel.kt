@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.example.travelapp.data.db.StationsEntity
 import com.example.travelapp.data.model.ApiResponse
 import com.example.travelapp.data.model.Payload
+import com.example.travelapp.data.util.Constants.FIRST_LAUNCH
 import com.example.travelapp.data.util.NetworkHelper
 import com.example.travelapp.data.util.Resource
 import com.example.travelapp.domain.repository.DataStoreRepository
@@ -11,8 +12,8 @@ import com.example.travelapp.domain.usecase.GetTrainStationsUseCase
 import com.example.travelapp.domain.usecase.ReadSavedStationsUseCase
 import com.example.travelapp.domain.usecase.SaveTrainStationsUseCase
 import com.example.travelapp.domain.usecase.SearchTrainStationsUseCase
+import com.example.travelapp.presentation.di.CoroutinesDispatcherProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -26,35 +27,34 @@ class TrainStationsViewModel @Inject constructor(
     private val searchTrainStationsUseCase: SearchTrainStationsUseCase,
     private val saveTrainStationsUseCase: SaveTrainStationsUseCase,
     private val readSavedStationsUseCase: ReadSavedStationsUseCase,
-    private val dataStoreRepository: DataStoreRepository
+    private val dataStoreRepository: DataStoreRepository,
+    private val coroutinesDispatcherProvider: CoroutinesDispatcherProvider
 ) : ViewModel() {
 
     private val trainStationsLiveData = MutableLiveData<Resource<List<Payload>>>()
     val trainStations: LiveData<Resource<List<Payload>>> = trainStationsLiveData
     var searchEnable: Boolean = false
 
-    init {
-        getTrainStations()
-    }
-
     fun getTrainStations() {
-        firstLaunch(true)
-        viewModelScope.launch(Dispatchers.IO) {
-            trainStationsLiveData.postValue(Resource.Loading())
-            try {
-                if (networkHelper.isNetworkConnected()) {
-                    val stations = trainStationsUseCase.invoke()
-                    offlineCacheTrainStations(stations.data!!)
-                    trainStationsLiveData.postValue(stations)
-                } else {
-                    trainStationsLiveData.postValue(Resource.Error("Internet is not available"))
+        if (trainStationsLiveData.value == null) {
+            firstLaunch(true)
+            viewModelScope.launch(coroutinesDispatcherProvider.io) {
+                trainStationsLiveData.postValue(Resource.Loading())
+                try {
+                    if (networkHelper.isNetworkConnected()) {
+                        val stations = trainStationsUseCase.invoke()
+                        offlineCacheTrainStations(stations.data!!)
+                        trainStationsLiveData.postValue(stations)
+                    } else {
+                        trainStationsLiveData.postValue(Resource.Error("Internet is not available"))
+                    }
+                } catch (e: Exception) {
+                    trainStationsLiveData.postValue(Resource.Error("Error occurred"))
                 }
-            } catch (e: Exception) {
-                trainStationsLiveData.postValue(Resource.Error(e.message.toString()))
             }
         }
-    }
 
+    }
 
     private fun offlineCacheTrainStations(data: List<Payload>) {
         viewModelScope.launch {
@@ -79,7 +79,7 @@ class TrainStationsViewModel @Inject constructor(
 
     fun searchTrainStations(query: String) {
         if (query.isNotEmpty() && searchEnable) {
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch(coroutinesDispatcherProvider.io) {
                 trainStationsLiveData.postValue(Resource.Loading())
                 try {
                     if (networkHelper.isNetworkConnected()) {
@@ -105,11 +105,11 @@ class TrainStationsViewModel @Inject constructor(
 
     private fun firstLaunch(isFirstLaunch: Boolean) {
         viewModelScope.launch {
-            dataStoreRepository.putBoolean("FIRST_LAUNCH", isFirstLaunch)
+            dataStoreRepository.putBoolean(FIRST_LAUNCH, isFirstLaunch)
         }
     }
 
     val isLaunched = runBlocking {
-        dataStoreRepository.getBoolean("FIRST_LAUNCH") ?: false
+        dataStoreRepository.getBoolean(FIRST_LAUNCH) ?: false
     }
 }
